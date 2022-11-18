@@ -1,0 +1,50 @@
+﻿@using WebApplication1.Models
+@model List<Urun>
+@{
+    ViewBag.Title = "Ürün Ekle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+<a href="/Urun/Ekle" class="btn btn-primary">Ekle</a>
+<table class="table table-bordered">
+    <tr>
+        <th>Resim</th>
+        <th>Ad</th>
+        <th>Açıklama</th>
+        <th>Fiyat</th>
+        <th>Stok</th>
+        <th>Kategori</th>
+
+        @if (User.IsInRole("A"))
+        {
+            <th>Sil</th>
+            <th>Düzenle</th>
+        }
+
+        @if (User.IsInRole("U"))
+        {
+            <th>Sepete Ekle</th>
+        }
+
+
+        </tr>
+        @foreach(var item in Model)
+            {
+            <tr>
+                <td><img src="~/Content/Image/@item.Resim" width="80" height="90"/></td>
+                <td>@item.Ad</td>
+                <td>@item.Açıklama</td>
+                <td>@item.Fiyat</td>
+                <td>@item.Stok</td>
+                <td>@item.KategoriId</td>
+
+                @if (User.IsInRole("A"))
+                {
+                    <td>@Html.ActionLink("Sil", "Sil", new { @class = "btn btn danger", onclick = "return confirm('Silmek İstiyormusunuz?')" })</td>
+                    <td><a href="/Urun/Guncelle/@item.İd" class="btn btn-success">Sepete Ekle</a></td>
+                }
+            </tr>
+            }
+  
+</table>
